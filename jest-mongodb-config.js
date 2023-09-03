@@ -1,7 +1,8 @@
 module.exports = {
   mongodbMemoryServerOptions: {
     instance: {
-      dbName: 'jest'
+      dbName: 'jest',
+      port: 42963
     },
     binary: {
       version: '4.0.3',
