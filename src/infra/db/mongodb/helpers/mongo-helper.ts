@@ -20,7 +20,6 @@ export const MongoHelper = {
   },
 
   async getCollection (name: string): Promise<Collection> {
-    // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
     if (!this.client?.isConnected()) {
       await this.connect(this.uri)
     }
