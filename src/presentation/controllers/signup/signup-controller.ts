@@ -15,13 +15,13 @@ export class SignUpController implements Controller {
         return badRequest(validationError)
       }
       const { name, email, password } = httpRequest.body
-      const account = await this.addAccount.add({
+      await this.addAccount.add({
         name,
         email,
         password
       })
-      await this.authentication.auth({ email, password })
-      return created(account)
+      const accessToken = await this.authentication.auth({ email, password })
+      return created({ accessToken })
     } catch (error) {
       return serverError(error)
     }
