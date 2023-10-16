@@ -1,3 +1,4 @@
+[![Build Status](https://app.travis-ci.com/Raymw1/clean-node-api.svg?branch=main)](https://app.travis-ci.com/Raymw1/clean-node-api)
 [![Coverage Status](https://coveralls.io/repos/github/Raymw1/clean-node-api/badge.svg)](https://coveralls.io/github/Raymw1/clean-node-api)
 [![Known Vulnerabilities](https://snyk.io/test/github/Raymw1/clean-node-api/badge.svg)](https://snyk.io/test/github/Raymw1/clean-node-api)
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com)
