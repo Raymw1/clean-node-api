@@ -32,15 +32,15 @@ const makeLoadSurveysRepository = (): LoadSurveysRepository => {
 }
 
 interface SutTypes {
-  loadSurveysRepository: LoadSurveysRepository
+  loadSurveysRepositoryStub: LoadSurveysRepository
   sut: DbLoadSurveys
 }
 
 const makeSut = (): SutTypes => {
-  const loadSurveysRepository = makeLoadSurveysRepository()
-  const sut = new DbLoadSurveys(loadSurveysRepository)
+  const loadSurveysRepositoryStub = makeLoadSurveysRepository()
+  const sut = new DbLoadSurveys(loadSurveysRepositoryStub)
   return {
-    loadSurveysRepository,
+    loadSurveysRepositoryStub,
     sut
   }
 }
@@ -55,7 +55,7 @@ describe('DbLoadSurveys Usecase', () => {
   })
 
   test('should call LoadSurveysRepository', async () => {
-    const { loadSurveysRepository, sut } = makeSut()
+    const { loadSurveysRepositoryStub: loadSurveysRepository, sut } = makeSut()
     const loadAllSpy = jest.spyOn(loadSurveysRepository, 'loadAll')
     await sut.load()
     expect(loadAllSpy).toHaveBeenCalled()
@@ -65,5 +65,12 @@ describe('DbLoadSurveys Usecase', () => {
     const { sut } = makeSut()
     const surveys = await sut.load()
     expect(surveys).toEqual(makeFakeSurveys())
+  })
+
+  test('should throw if LoadSurveysRepository throws', async () => {
+    const { loadSurveysRepositoryStub, sut } = makeSut()
+    jest.spyOn(loadSurveysRepositoryStub, 'loadAll').mockReturnValueOnce(new Promise((resolve, reject) => { reject(new Error()) }))
+    const promise = sut.load()
+    await expect(promise).rejects.toThrow()
   })
 })
