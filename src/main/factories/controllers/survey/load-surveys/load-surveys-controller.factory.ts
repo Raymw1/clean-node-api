@@ -4,6 +4,6 @@ import { makeLogControllerDecorator } from '../../../decorators/log-controller-d
 import { makeDbLoadSurveys } from '../../../usecases/survey/load-surveys/db-load-surveys-factory'
 
 export const makeLoadSurveysController = (): Controller => {
-  const loadSurveysController = new LoadSurveysController(makeDbLoadSurveys())
-  return makeLogControllerDecorator(loadSurveysController)
+  const controller = new LoadSurveysController(makeDbLoadSurveys())
+  return makeLogControllerDecorator(controller)
 }

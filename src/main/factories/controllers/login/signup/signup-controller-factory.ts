@@ -6,6 +6,6 @@ import { makeDbAuthentication } from '../../../usecases/account/authentication/d
 import { makeSignUpValidation } from './signup-validation-factory'
 
 export const makeSignUpController = (): Controller => {
-  const signUpController = new SignUpController(makeDbAddAccount(), makeSignUpValidation(), makeDbAuthentication())
-  return makeLogControllerDecorator(signUpController)
+  const controller = new SignUpController(makeDbAddAccount(), makeSignUpValidation(), makeDbAuthentication())
+  return makeLogControllerDecorator(controller)
 }
