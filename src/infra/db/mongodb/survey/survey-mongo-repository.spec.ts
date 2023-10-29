@@ -88,5 +88,11 @@ describe('Survey Mongo Repository', () => {
       const survey = await sut.loadById(res.ops[0]._id)
       expect(survey).toBeTruthy()
     })
+
+    test('should return null if loadById fails', async () => {
+      const sut = makeSut()
+      const survey = await sut.loadById('any_id')
+      expect(survey).toBeNull()
+    })
   })
 })
