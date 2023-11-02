@@ -28,7 +28,7 @@ const makeFakeRequest = (): HttpRequest => ({
   }
 })
 
-export type SutTypes = {
+type SutTypes = {
   authenticationStub: Authentication
   validationStub: Validation
   sut: LoginController
