@@ -5,7 +5,7 @@ import type { Controller, HttpRequest, HttpResponse, LoadSurveyById, SaveSurveyR
 export class SaveSurveyResultController implements Controller {
   constructor (
     private readonly loadSurveyById: LoadSurveyById,
-    private readonly saveSurveyResultStub: SaveSurveyResult
+    private readonly saveSurveyResult: SaveSurveyResult
   ) { }
 
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
@@ -22,7 +22,7 @@ export class SaveSurveyResultController implements Controller {
       } else {
         return forbidden(new InvalidParamError('surveyId'))
       }
-      const surveyResult = await this.saveSurveyResultStub.save({
+      const surveyResult = await this.saveSurveyResult.save({
         surveyId,
         accountId,
         answer,
