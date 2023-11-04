@@ -6,7 +6,7 @@ import { mockSurveyModel } from '@/domain/test'
 export const mockLogErrorRepository = (): LogErrorRepository => {
   class LogErrorRepositoryStub implements LogErrorRepository {
     async logError (stack: string): Promise<void> {
-      return new Promise(resolve => { resolve() })
+      return Promise.resolve()
     }
   }
   return new LogErrorRepositoryStub()
@@ -15,7 +15,7 @@ export const mockLogErrorRepository = (): LogErrorRepository => {
 export const mockLoadSurveyByIdRepositoryStub = (): LoadSurveyByIdRepository => {
   class LoadSurveyByIdRepositoryStub implements LoadSurveyByIdRepository {
     async loadById (id: string): Promise<SurveyModel | null> {
-      return new Promise(resolve => { resolve(mockSurveyModel()) })
+      return Promise.resolve(mockSurveyModel())
     }
   }
   return new LoadSurveyByIdRepositoryStub()

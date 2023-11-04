@@ -7,7 +7,7 @@ import { type LoadSurveyById } from '@/domain/usecases/survey/load-survey-by-id'
 export const mockLoadSurveyById = (): LoadSurveyById => {
   class LoadSurveyByIdStub implements LoadSurveyById {
     async loadById (id: string): Promise<SurveyModel | null> {
-      return new Promise(resolve => { resolve(mockSurveyModel()) })
+      return Promise.resolve(mockSurveyModel())
     }
   }
   return new LoadSurveyByIdStub()
@@ -16,7 +16,7 @@ export const mockLoadSurveyById = (): LoadSurveyById => {
 export const mockSaveSurveyResult = (): SaveSurveyResult => {
   class SaveSurveyResultStub implements SaveSurveyResult {
     async save (data: SaveSurveyResultParams): Promise<SurveyResultModel> {
-      return new Promise(resolve => { resolve(mockSurveyResultModel()) })
+      return Promise.resolve(mockSurveyResultModel())
     }
   }
   return new SaveSurveyResultStub()

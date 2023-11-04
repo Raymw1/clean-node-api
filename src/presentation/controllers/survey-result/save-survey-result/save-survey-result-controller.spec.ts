@@ -1,4 +1,4 @@
-import { mockSurveyResultModel } from '@/domain/test'
+import { mockSurveyResultModel, throwError } from '@/domain/test'
 import { InvalidParamError } from '@/presentation/errors'
 import { forbidden, ok, serverError } from '@/presentation/helpers/http/http-helper'
 import { mockLoadSurveyById, mockSaveSurveyResult } from '@/presentation/test'
@@ -51,16 +51,16 @@ describe('SaveSurveyResult Controller', () => {
 
   test('should return 403 if LoadSurveyById returns null', async () => {
     const { loadSurveyByIdStub, sut } = makeSut()
-    jest.spyOn(loadSurveyByIdStub, 'loadById').mockReturnValueOnce(new Promise(resolve => { resolve(null) }))
+    jest.spyOn(loadSurveyByIdStub, 'loadById').mockReturnValueOnce(Promise.resolve(null))
     const httpResponse = await sut.handle(mockRequest())
     expect(httpResponse).toEqual(forbidden(new InvalidParamError('surveyId')))
   })
 
   test('should return 500 if LoadSurveyById throws', async () => {
     const { loadSurveyByIdStub, sut } = makeSut()
-    jest.spyOn(loadSurveyByIdStub, 'loadById').mockReturnValueOnce(new Promise((resolve, reject) => { reject(new Error('LoadSurveyById')) }))
+    jest.spyOn(loadSurveyByIdStub, 'loadById').mockImplementationOnce(throwError)
     const httpResponse = await sut.handle(mockRequest())
-    expect(httpResponse).toEqual(serverError(new Error('LoadSurveyById')))
+    expect(httpResponse).toEqual(serverError(new Error()))
   })
 
   test('should return 403 if an invalid answer is provided', async () => {
@@ -90,9 +90,9 @@ describe('SaveSurveyResult Controller', () => {
 
   test('should return 500 if SaveSurveyResult throws', async () => {
     const { saveSurveyResultStub, sut } = makeSut()
-    jest.spyOn(saveSurveyResultStub, 'save').mockReturnValueOnce(new Promise((resolve, reject) => { reject(new Error('SaveSurveyResult')) }))
+    jest.spyOn(saveSurveyResultStub, 'save').mockImplementationOnce(throwError)
     const httpResponse = await sut.handle(mockRequest())
-    expect(httpResponse).toEqual(serverError(new Error('SaveSurveyResult')))
+    expect(httpResponse).toEqual(serverError(new Error()))
   })
 
   test('should return 200 on success', async () => {
