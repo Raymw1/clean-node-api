@@ -1,7 +1,7 @@
-export const surveysPath = {
+export const surveyPath = {
   get: {
     security: [{ apiKeyAuth: [] }],
-    tags: ['Surveys'],
+    tags: ['Survey'],
     summary: 'API to list all surveys',
     responses: {
       200: {
@@ -21,7 +21,7 @@ export const surveysPath = {
   },
   post: {
     security: [{ apiKeyAuth: [] }],
-    tags: ['Surveys'],
+    tags: ['Survey'],
     summary: 'API to create a survey',
     requestBody: {
       content: {
