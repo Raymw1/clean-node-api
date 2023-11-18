@@ -1,4 +1,4 @@
-import { accountSchema, addSurveyParamsSchema, errorSchema, loginParamsSchema, saveSurveyResultParamsSchema, signUpParamsSchema, surveyAnswerSchema, surveyResultSchema, surveySchema, surveysSchema } from '../schemas'
+import { accountSchema, addSurveyParamsSchema, errorSchema, loginParamsSchema, saveSurveyResultParamsSchema, signUpParamsSchema, surveyAnswerSchema, surveyResultAnswerSchema, surveyResultSchema, surveySchema, surveysSchema } from '../schemas'
 
 export const schemas = {
   account: accountSchema,
@@ -9,6 +9,7 @@ export const schemas = {
   signUpParams: signUpParamsSchema,
   surveyAnswer: surveyAnswerSchema,
   surveyResult: surveyResultSchema,
+  surveyResultAnswer: surveyResultAnswerSchema,
   survey: surveySchema,
   surveys: surveysSchema
 }
