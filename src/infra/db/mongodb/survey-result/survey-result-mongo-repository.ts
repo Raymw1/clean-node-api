@@ -19,7 +19,7 @@ export class SurveyResultMongoRepository implements LoadSurveyResultRepository, 
     })
   }
 
-  async loadBySurveyId (surveyId: string): Promise<SurveyResultModel> {
+  async loadBySurveyId (surveyId: string): Promise<SurveyResultModel | null> {
     const surveyResultCollection = await MongoHelper.getCollection('surveyResults')
     const query = new QueryBuilder()
       .match({
@@ -192,6 +192,9 @@ export class SurveyResultMongoRepository implements LoadSurveyResultRepository, 
       })
       .build()
     const surveyResult = await surveyResultCollection.aggregate(query).toArray()
-    return surveyResult?.length && surveyResult[0]
+    if (!surveyResult?.length) {
+      return null
+    }
+    return surveyResult[0]
   }
 }

@@ -12,7 +12,7 @@ export const mockLogErrorRepository = (): LogErrorRepository => {
   return new LogErrorRepositoryStub()
 }
 
-export const mockLoadSurveyByIdRepositoryStub = (): LoadSurveyByIdRepository => {
+export const mockLoadSurveyByIdRepository = (): LoadSurveyByIdRepository => {
   class LoadSurveyByIdRepositoryStub implements LoadSurveyByIdRepository {
     async loadById (id: string): Promise<SurveyModel | null> {
       return Promise.resolve(mockSurveyModel())
