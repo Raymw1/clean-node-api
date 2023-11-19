@@ -192,7 +192,7 @@ export class SurveyResultMongoRepository implements LoadSurveyResultRepository, 
       })
       .build()
     const surveyResult = await surveyResultCollection.aggregate(query).toArray()
-    if (!surveyResult?.length) {
+    if (!surveyResult.length) {
       return null
     }
     return surveyResult[0]
