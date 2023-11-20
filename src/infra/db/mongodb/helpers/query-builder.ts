@@ -1,11 +1,6 @@
 export class QueryBuilder {
   private readonly query: object[] = []
 
-  addFields (data: object): QueryBuilder {
-    this.query.push({ $addFields: data })
-    return this
-  }
-
   build (): object[] {
     return this.query
   }
