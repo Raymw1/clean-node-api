@@ -2,39 +2,45 @@ import { type Decrypter } from '@/data/protocols/criptography/decrypter'
 import { type Encrypter } from '@/data/protocols/criptography/encrypter'
 import { type HashComparer } from '@/data/protocols/criptography/hash-comparer'
 import { type Hasher } from '@/data/protocols/criptography/hasher'
+import faker from 'faker'
 
-export const mockDecrypter = (): Decrypter => {
-  class DecrypterStub implements Decrypter {
-    async decrypt (value: string): Promise<string | null> {
-      return Promise.resolve('any_value')
-    }
+export class DecrypterSpy implements Decrypter {
+  plaintext: string | null = faker.internet.password()
+  ciphertext: string
+
+  async decrypt (ciphertext: string): Promise<string | null> {
+    this.ciphertext = ciphertext
+    return Promise.resolve(this.plaintext)
   }
-  return new DecrypterStub()
+}
+export class EncrypterSpy implements Encrypter {
+  ciphertext = faker.random.uuid()
+  plaintext: string
+
+  async encrypt (plaintext: string): Promise<string> {
+    this.plaintext = plaintext
+    return Promise.resolve(this.ciphertext)
+  }
 }
 
-export const mockEncrypter = (): Encrypter => {
-  class EncrypterStub implements Encrypter {
-    async encrypt (id: string): Promise<string> {
-      return Promise.resolve('any_token')
-    }
+export class HashComparerSpy implements HashComparer {
+  isValid = true
+  plaintext: string
+  digest: string
+
+  async compare (plaintext: string, digest: string): Promise<boolean> {
+    this.plaintext = plaintext
+    this.digest = digest
+    return Promise.resolve(this.isValid)
   }
-  return new EncrypterStub()
 }
 
-export const mockHashComparer = (): HashComparer => {
-  class HashComparerStub implements HashComparer {
-    async compare (value: string, hash: string): Promise<boolean> {
-      return Promise.resolve(true)
-    }
-  }
-  return new HashComparerStub()
-}
+export class HasherSpy implements Hasher {
+  digest = faker.random.uuid()
+  plaintext: string
 
-export const mockHasher = (): Hasher => {
-  class HasherStub implements Hasher {
-    async hash (value: string): Promise<string> {
-      return await Promise.resolve('hashed_password')
-    }
+  async hash (plaintext: string): Promise<string> {
+    this.plaintext = plaintext
+    return await Promise.resolve(this.digest)
   }
-  return new HasherStub()
 }

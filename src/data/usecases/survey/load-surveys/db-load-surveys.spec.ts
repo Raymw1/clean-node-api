@@ -1,19 +1,18 @@
-import { mockLoadSurveysRepository } from '@/data/test'
-import { mockSurveyModels, throwError } from '@/domain/test'
+import { LoadSurveysRepositorySpy } from '@/data/test'
+import { throwError } from '@/domain/test'
 import MockDate from 'mockdate'
 import { DbLoadSurveys } from './db-load-surveys'
-import type { LoadSurveysRepository } from './db-load-surveys-protocols'
 
 type SutTypes = {
-  loadSurveysRepositoryStub: LoadSurveysRepository
+  loadSurveysRepositorySpy: LoadSurveysRepositorySpy
   sut: DbLoadSurveys
 }
 
 const makeSut = (): SutTypes => {
-  const loadSurveysRepositoryStub = mockLoadSurveysRepository()
-  const sut = new DbLoadSurveys(loadSurveysRepositoryStub)
+  const loadSurveysRepositorySpy = new LoadSurveysRepositorySpy()
+  const sut = new DbLoadSurveys(loadSurveysRepositorySpy)
   return {
-    loadSurveysRepositoryStub,
+    loadSurveysRepositorySpy,
     sut
   }
 }
@@ -28,21 +27,20 @@ describe('DbLoadSurveys Usecase', () => {
   })
 
   test('should call LoadSurveysRepository', async () => {
-    const { loadSurveysRepositoryStub: loadSurveysRepository, sut } = makeSut()
-    const loadAllSpy = jest.spyOn(loadSurveysRepository, 'loadAll')
+    const { loadSurveysRepositorySpy, sut } = makeSut()
     await sut.load()
-    expect(loadAllSpy).toHaveBeenCalled()
+    expect(loadSurveysRepositorySpy.callsCount).toBe(1)
   })
 
   test('should return a list of surveys on success', async () => {
-    const { sut } = makeSut()
+    const { loadSurveysRepositorySpy, sut } = makeSut()
     const surveys = await sut.load()
-    expect(surveys).toEqual(mockSurveyModels())
+    expect(surveys).toEqual(loadSurveysRepositorySpy.surveyModels)
   })
 
   test('should throw if LoadSurveysRepository throws', async () => {
-    const { loadSurveysRepositoryStub, sut } = makeSut()
-    jest.spyOn(loadSurveysRepositoryStub, 'loadAll').mockImplementationOnce(throwError)
+    const { loadSurveysRepositorySpy, sut } = makeSut()
+    jest.spyOn(loadSurveysRepositorySpy, 'loadAll').mockImplementationOnce(throwError)
     const promise = sut.load()
     await expect(promise).rejects.toThrow()
   })
