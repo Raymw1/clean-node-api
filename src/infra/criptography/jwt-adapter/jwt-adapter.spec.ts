@@ -11,6 +11,16 @@ jest.mock('jsonwebtoken', () => ({
   }
 }))
 
+const mockJsonWebTokenError = (): Error => {
+  class JsonWebTokenError extends Error {
+    constructor () {
+      super()
+      this.name = 'JsonWebTokenError'
+    }
+  }
+  return new JsonWebTokenError()
+}
+
 const makeSut = (): JwtAdapter => {
   const secret = 'secret'
   return new JwtAdapter(secret)
@@ -51,6 +61,14 @@ describe('Jwt Adapter', () => {
       const sut = makeSut()
       const value = await sut.decrypt('any_id')
       expect(value).toBe('any_value')
+    })
+
+    test('should return null if verify throws JsonWebTokenError', async () => {
+      const sut = makeSut()
+      const error = mockJsonWebTokenError()
+      jest.spyOn(jwt, 'verify').mockImplementationOnce(() => { throw error })
+      const value = await sut.decrypt('any_id')
+      expect(value).toBeNull()
     })
 
     test('should throw if verify throws', async () => {
