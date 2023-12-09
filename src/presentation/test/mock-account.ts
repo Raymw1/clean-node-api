@@ -1,9 +1,9 @@
 import { type AccountModel } from '@/domain/models/account'
-import { mockAccountModel } from '@/domain/test'
+import { type AuthenticationModel } from '@/domain/models/authentication'
+import { mockAccountModel, mockAuthenticationModel } from '@/domain/test'
 import type { AddAccount, AddAccountParams } from '@/domain/usecases/account/add-account'
 import type { Authentication, AuthenticationParams } from '@/domain/usecases/account/authentication'
 import { type LoadAccountByToken } from '@/domain/usecases/account/load-account-by-token'
-import faker from 'faker'
 
 export class AddAccountSpy implements AddAccount {
   accountModel: AccountModel | null = mockAccountModel()
@@ -16,12 +16,12 @@ export class AddAccountSpy implements AddAccount {
 }
 
 export class AuthenticationSpy implements Authentication {
-  accessToken: string | null = faker.random.uuid()
+  authenticationModel: AuthenticationModel | null = mockAuthenticationModel()
   authenticationParams: AuthenticationParams
 
-  async auth (authentication: AuthenticationParams): Promise<string | null> {
+  async auth (authentication: AuthenticationParams): Promise<AuthenticationModel | null> {
     this.authenticationParams = authentication
-    return Promise.resolve(this.accessToken)
+    return Promise.resolve(this.authenticationModel)
   }
 }
 
