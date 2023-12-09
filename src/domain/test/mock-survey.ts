@@ -9,6 +9,7 @@ export const mockSurveyModel = (): SurveyModel => ({
     { image: faker.image.imageUrl(), answer: faker.random.word() },
     { answer: faker.random.word() }
   ],
+  didAnswer: faker.random.boolean(),
   date: faker.date.recent()
 })
 
