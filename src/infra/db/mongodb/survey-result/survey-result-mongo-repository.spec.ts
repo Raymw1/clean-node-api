@@ -9,12 +9,12 @@ const makeSut = (): SurveyResultMongoRepository => {
   return new SurveyResultMongoRepository()
 }
 
-const makeSurvey = async (): Promise<SurveyModel> => {
+const mockSurvey = async (): Promise<SurveyModel> => {
   const res = await surveyCollection.insertOne(mockAddSurveyParams())
   return res.ops[0] && MongoHelper.map<SurveyModel>(res.ops[0])
 }
 
-const makeAccount = async (): Promise<AccountModel> => {
+const mockAccount = async (): Promise<AccountModel> => {
   const res = await accountCollection.insertOne(mockAddAccountParams())
   return res.ops[0] && MongoHelper.map<AccountModel>(res.ops[0])
 }
@@ -39,14 +39,14 @@ describe('Survey Result Mongo Repository', () => {
     await surveyCollection.deleteMany({})
     surveyResultCollection = await MongoHelper.getCollection('surveyResults')
     await surveyResultCollection.deleteMany({})
-    accountCollection = await MongoHelper.getCollection('surveyResults')
+    accountCollection = await MongoHelper.getCollection('accounts')
     await accountCollection.deleteMany({})
   })
 
   describe('save()', () => {
     test('should insert a new survey result if there is no survey result with surveyId and accountId', async () => {
-      const survey = await makeSurvey()
-      const account = await makeAccount()
+      const survey = await mockSurvey()
+      const account = await mockAccount()
       const sut = makeSut()
       await sut.save({
         surveyId: survey.id,
@@ -60,8 +60,8 @@ describe('Survey Result Mongo Repository', () => {
     })
 
     test('should update a survey result if survey result it is not new', async () => {
-      const survey = await makeSurvey()
-      const account = await makeAccount()
+      const survey = await mockSurvey()
+      const account = await mockAccount()
       await surveyResultCollection.insertOne({
         surveyId: new ObjectId(survey.id),
         accountId: new ObjectId(account.id),
@@ -84,8 +84,8 @@ describe('Survey Result Mongo Repository', () => {
 
   describe('loadBySurveyId()', () => {
     test('should load survey result on success', async () => {
-      const survey = await makeSurvey()
-      const account = await makeAccount()
+      const survey = await mockSurvey()
+      const account = await mockAccount()
       await surveyResultCollection.insertMany([{
         surveyId: new ObjectId(survey.id),
         accountId: new ObjectId(account.id),
@@ -110,7 +110,7 @@ describe('Survey Result Mongo Repository', () => {
     })
 
     test('should return null if there is no surveyResult ', async () => {
-      const survey = await makeSurvey()
+      const survey = await mockSurvey()
       const sut = makeSut()
       const surveyResult = await sut.loadBySurveyId(survey.id)
       expect(surveyResult).toBeNull()
