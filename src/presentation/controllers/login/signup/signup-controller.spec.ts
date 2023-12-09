@@ -1,10 +1,10 @@
 import { throwError } from '@/domain/test'
 import { EmailInUseError, MissingParamError, ServerError } from '@/presentation/errors'
 import { badRequest, created, forbidden, serverError } from '@/presentation/helpers/http/http-helper'
+import type { HttpRequest } from '@/presentation/protocols'
 import { AddAccountSpy, AuthenticationSpy, ValidationSpy } from '@/presentation/test'
 import faker from 'faker'
 import { SignUpController } from './signup-controller'
-import type { HttpRequest } from './signup-controller-protocols'
 
 const mockRequest = (): HttpRequest => {
   const password = faker.internet.password()

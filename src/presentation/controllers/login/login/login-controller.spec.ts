@@ -1,10 +1,10 @@
 import { throwError } from '@/domain/test'
 import { MissingParamError } from '@/presentation/errors'
 import { badRequest, ok, serverError, unauthorized } from '@/presentation/helpers/http/http-helper'
+import type { HttpRequest } from '@/presentation/protocols'
 import { AuthenticationSpy, ValidationSpy } from '@/presentation/test'
 import faker from 'faker'
 import { LoginController } from './login-controller'
-import type { HttpRequest } from './login-controller-protocols'
 
 const mockRequest = (): HttpRequest => ({
   body: {

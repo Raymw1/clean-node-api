@@ -1,10 +1,10 @@
 import { throwError } from '@/domain/test'
 import { badRequest, noContent, serverError } from '@/presentation/helpers/http/http-helper'
+import type { HttpRequest } from '@/presentation/protocols'
 import { AddSurveySpy, ValidationSpy } from '@/presentation/test'
 import faker from 'faker'
 import MockDate from 'mockdate'
 import { AddSurveyController } from './add-survey-controller'
-import type { HttpRequest } from './add-survey-controller-protocols'
 
 const mockRequest = (): HttpRequest => ({
   body: {

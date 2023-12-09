@@ -1,11 +1,11 @@
 import { throwError } from '@/domain/test'
 import { InvalidParamError } from '@/presentation/errors'
 import { forbidden, ok, serverError } from '@/presentation/helpers/http/http-helper'
+import type { HttpRequest } from '@/presentation/protocols'
 import { LoadSurveyByIdSpy, LoadSurveyResultSpy } from '@/presentation/test'
 import faker from 'faker'
 import MockDate from 'mockdate'
 import { LoadSurveyResultController } from './load-survey-result-controller'
-import type { HttpRequest } from './load-survey-result-controller-protocols'
 
 const mockRequest = (): HttpRequest => ({
   params: {
