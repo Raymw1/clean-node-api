@@ -6,9 +6,11 @@ import type { SaveSurveyResult, SaveSurveyResultParams } from '@/domain/usecases
 export class LoadSurveyResultSpy implements LoadSurveyResult {
   surveyResultModel = mockSurveyResultModel()
   surveyId: string
+  accountId: string
 
-  async load (surveyId: string): Promise<SurveyResultModel> {
+  async load (surveyId: string, accountId: string): Promise<SurveyResultModel> {
     this.surveyId = surveyId
+    this.accountId = accountId
     return Promise.resolve(this.surveyResultModel)
   }
 }

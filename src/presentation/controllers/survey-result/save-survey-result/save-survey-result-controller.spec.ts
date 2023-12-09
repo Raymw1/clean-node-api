@@ -72,7 +72,8 @@ describe('SaveSurveyResult Controller', () => {
       },
       body: {
         answer: faker.random.word()
-      }
+      },
+      accountId: faker.random.uuid()
     })
     expect(httpResponse).toEqual(forbidden(new InvalidParamError('answer')))
   })
