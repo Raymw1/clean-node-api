@@ -67,7 +67,7 @@ describe('SignUp Controller', () => {
   test('should return 201 if valid data is provided', async () => {
     const { authenticationSpy, sut } = makeSut()
     const httpResponse = await sut.handle(mockRequest())
-    expect(httpResponse).toEqual(created({ accessToken: authenticationSpy.accessToken }))
+    expect(httpResponse).toEqual(created(authenticationSpy.authenticationModel))
   })
 
   test('should call Validation with correct value', async () => {
