@@ -1,7 +1,7 @@
 import { MissingParamError } from '@/presentation/errors'
+import { ValidationSpy } from '@/tests/validation/mocks'
 import { ValidationComposite } from '@/validation/validators'
 import faker from 'faker'
-import { ValidationSpy } from '../mocks'
 
 type SutTypes = {
   validationSpies: ValidationSpy[]

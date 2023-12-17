@@ -1,6 +1,6 @@
 import { type SurveyResultModel } from '@/domain/models'
 import type { LoadSurveyResult, SaveSurveyResult, SaveSurveyResultParams } from '@/domain/usecases'
-import { mockSurveyResultModel } from '../../domain/mocks'
+import { mockSurveyResultModel } from '@/tests/domain/mocks'
 
 export class LoadSurveyResultSpy implements LoadSurveyResult {
   surveyResultModel = mockSurveyResultModel()

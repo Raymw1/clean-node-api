@@ -1,9 +1,9 @@
 import { AccessDeniedError } from '@/presentation/errors'
 import { forbidden, ok, serverError } from '@/presentation/helpers'
 import { AuthMiddleware } from '@/presentation/middlewares'
+import { throwError } from '@/tests/domain/mocks'
+import { LoadAccountByTokenSpy } from '@/tests/presentation/mocks'
 import faker from 'faker'
-import { throwError } from '../../domain/mocks'
-import { LoadAccountByTokenSpy } from '../mocks'
 
 const mockRequest = (): AuthMiddleware.Request => ({
   'x-access-token': faker.random.uuid()

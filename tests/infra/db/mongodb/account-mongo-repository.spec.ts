@@ -1,7 +1,7 @@
 import { AccountMongoRepository, MongoHelper } from '@/infra/db'
+import { mockAddAccountParams } from '@/tests/domain/mocks'
 import faker from 'faker'
 import { type Collection } from 'mongodb'
-import { mockAddAccountParams } from '../../../domain/mocks'
 
 const makeSut = (): AccountMongoRepository => {
   return new AccountMongoRepository()

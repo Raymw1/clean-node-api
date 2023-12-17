@@ -1,9 +1,9 @@
 import { LoadSurveysController } from '@/presentation/controllers'
 import { noContent, ok, serverError } from '@/presentation/helpers'
+import { throwError } from '@/tests/domain/mocks'
+import { LoadSurveysSpy } from '@/tests/presentation/mocks'
 import faker from 'faker'
 import MockDate from 'mockdate'
-import { throwError } from '../../domain/mocks'
-import { LoadSurveysSpy } from '../mocks'
 
 const mockRequest = (): LoadSurveysController.Request => ({
   accountId: faker.random.uuid()

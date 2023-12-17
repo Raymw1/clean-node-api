@@ -1,7 +1,7 @@
 import type { AddSurveyRepository, LoadSurveyByIdRepository, LoadSurveysRepository } from '@/data/protocols'
 import { type SurveyModel } from '@/domain/models'
 import { type AddSurveyParams } from '@/domain/usecases'
-import { mockSurveyModel, mockSurveyModels } from '../../domain/mocks'
+import { mockSurveyModel, mockSurveyModels } from '@/tests/domain/mocks'
 
 export class AddSurveyRepositorySpy implements AddSurveyRepository {
   addSurveyParams: AddSurveyParams

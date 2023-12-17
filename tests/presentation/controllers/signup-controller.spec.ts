@@ -1,9 +1,9 @@
 import { SignUpController } from '@/presentation/controllers'
 import { EmailInUseError, MissingParamError, ServerError } from '@/presentation/errors'
 import { badRequest, created, forbidden, serverError } from '@/presentation/helpers'
+import { throwError } from '@/tests/domain/mocks'
+import { AddAccountSpy, AuthenticationSpy, ValidationSpy } from '@/tests/presentation/mocks'
 import faker from 'faker'
-import { throwError } from '../../domain/mocks'
-import { AddAccountSpy, AuthenticationSpy, ValidationSpy } from '../mocks'
 
 const mockRequest = (): SignUpController.Request => {
   const password = faker.internet.password()

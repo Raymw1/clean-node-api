@@ -1,7 +1,7 @@
 import type { LoadSurveyResultRepository, SaveSurveyResultRepository } from '@/data/protocols'
 import { type SurveyResultModel } from '@/domain/models'
 import { type SaveSurveyResultParams } from '@/domain/usecases'
-import { mockSurveyResultModel } from '../../domain/mocks'
+import { mockSurveyResultModel } from '@/tests/domain/mocks'
 
 export class LoadSurveyResultRepositorySpy implements LoadSurveyResultRepository {
   surveyResultModel: SurveyResultModel | null = mockSurveyResultModel()

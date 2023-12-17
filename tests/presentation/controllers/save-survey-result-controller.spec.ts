@@ -1,10 +1,10 @@
 import { SaveSurveyResultController } from '@/presentation/controllers'
 import { InvalidParamError } from '@/presentation/errors'
 import { forbidden, ok, serverError } from '@/presentation/helpers'
+import { throwError } from '@/tests/domain/mocks'
+import { LoadSurveyByIdSpy, SaveSurveyResultSpy } from '@/tests/presentation/mocks'
 import faker from 'faker'
 import MockDate from 'mockdate'
-import { throwError } from '../../domain/mocks'
-import { LoadSurveyByIdSpy, SaveSurveyResultSpy } from '../mocks'
 
 const mockRequest = (answer?: string): SaveSurveyResultController.Request => ({
   accountId: faker.random.uuid(),

@@ -1,6 +1,6 @@
 import { type AccountModel, type AuthenticationModel } from '@/domain/models'
 import type { AddAccount, Authentication, AuthenticationParams, LoadAccountByToken } from '@/domain/usecases'
-import { mockAccountModel, mockAuthenticationModel } from '../../domain/mocks'
+import { mockAccountModel, mockAuthenticationModel } from '@/tests/domain/mocks'
 
 export class AddAccountSpy implements AddAccount {
   accountCreated = true
