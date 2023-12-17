@@ -1,4 +1,4 @@
-import { JwtAdapter } from '@/infra/criptography'
+import { JwtAdapter } from '@/infra/cryptography'
 import jwt from 'jsonwebtoken'
 import { throwError } from '../../domain/mocks'
 
