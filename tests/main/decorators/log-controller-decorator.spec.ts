@@ -1,31 +1,23 @@
 import { LogControllerDecorator } from '@/main/decorators'
 import { created, serverError } from '@/presentation/helpers'
-import type { Controller, HttpRequest, HttpResponse } from '@/presentation/protocols'
+import type { Controller, HttpResponse } from '@/presentation/protocols'
 import faker from 'faker'
 import { LogErrorRepositorySpy } from '../../data/mocks'
 import { mockAccountModel } from '../../domain/mocks'
 
 class ControllerSpy implements Controller {
   httpResponse = created(mockAccountModel())
-  httpRequest: HttpRequest
+  request: unknown
 
-  async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
-    this.httpRequest = httpRequest
+  async handle (request: unknown): Promise<HttpResponse> {
+    this.request = request
     return Promise.resolve(this.httpResponse)
   }
 }
 
-const mockRequest = (): HttpRequest => {
-  const password = faker.internet.password()
-  return {
-    body: {
-      name: faker.name.findName(),
-      email: faker.internet.email(),
-      password,
-      passwordConfirmation: password
-    }
-  }
-}
+const mockRequest = (): unknown => ({
+  mockedParam: faker.lorem.sentence()
+})
 
 const mockServerError = (): HttpResponse => {
   const fakeError = new Error()
@@ -53,9 +45,9 @@ const makeSut = (): SutTypes => {
 describe('LogController Decorator', () => {
   test('should call controller handle with correct value', async () => {
     const { controllerSpy, sut } = makeSut()
-    const httpRequest = mockRequest()
-    await sut.handle(httpRequest)
-    expect(controllerSpy.httpRequest).toEqual(httpRequest)
+    const request = mockRequest()
+    await sut.handle(request)
+    expect(controllerSpy.request).toEqual(request)
   })
 
   test('should return the same result of the controller', async () => {

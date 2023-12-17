@@ -1,12 +1,11 @@
 import { LoadSurveysController } from '@/presentation/controllers'
 import { noContent, ok, serverError } from '@/presentation/helpers'
-import { type HttpRequest } from '@/presentation/protocols'
 import faker from 'faker'
 import MockDate from 'mockdate'
 import { throwError } from '../../domain/mocks'
 import { LoadSurveysSpy } from '../mocks'
 
-const mockRequest = (): HttpRequest => ({
+const mockRequest = (): LoadSurveysController.Request => ({
   accountId: faker.random.uuid()
 })
 
@@ -35,9 +34,9 @@ describe('LoadSurveys Controller', () => {
 
   test('should call LoadSurveys with correct value', async () => {
     const { loadSurveysSpy, sut } = makeSut()
-    const httpRequest = mockRequest()
-    await sut.handle(httpRequest)
-    expect(loadSurveysSpy.accountId).toBe(httpRequest.accountId)
+    const request = mockRequest()
+    await sut.handle(request)
+    expect(loadSurveysSpy.accountId).toBe(request.accountId)
   })
 
   test('should return 200 on success', async () => {

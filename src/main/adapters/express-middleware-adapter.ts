@@ -1,17 +1,17 @@
-import type { HttpRequest, Middleware } from '@/presentation/protocols'
+import type { Middleware } from '@/presentation/protocols'
 import type { NextFunction, Request, Response } from 'express'
 
 export const adaptMiddleware = (middleware: Middleware) => {
-  return async (request: Request, response: Response, next: NextFunction) => {
-    const httpRequest: HttpRequest = {
-      headers: request.headers
+  return async (httpRequest: Request, httpResponse: Response, next: NextFunction) => {
+    const request = {
+      ...(httpRequest.headers || {})
     }
-    const httpResponse = await middleware.handle(httpRequest)
-    if (httpResponse.statusCode === 200) {
-      Object.assign(request, httpResponse.body)
+    const response = await middleware.handle(request)
+    if (response.statusCode === 200) {
+      Object.assign(httpRequest, response.body)
       next()
     } else {
-      response.status(httpResponse.statusCode).json({ error: httpResponse.body.message })
+      httpResponse.status(response.statusCode).json({ error: response.body.message })
     }
   }
 }
