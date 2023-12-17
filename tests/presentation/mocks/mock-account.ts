@@ -1,14 +1,14 @@
 import { type AccountModel, type AuthenticationModel } from '@/domain/models'
-import type { AddAccount, AddAccountParams, Authentication, AuthenticationParams, LoadAccountByToken } from '@/domain/usecases'
+import type { AddAccount, Authentication, AuthenticationParams, LoadAccountByToken } from '@/domain/usecases'
 import { mockAccountModel, mockAuthenticationModel } from '../../domain/mocks'
 
 export class AddAccountSpy implements AddAccount {
-  accountModel: AccountModel | null = mockAccountModel()
-  addAccountParams: AddAccountParams
+  accountCreated = true
+  addAccountParams: AddAccount.Params
 
-  async add (account: AddAccountParams): Promise<AccountModel | null> {
+  async add (account: AddAccount.Params): Promise<AddAccount.Result> {
     this.addAccountParams = account
-    return await Promise.resolve(this.accountModel)
+    return Promise.resolve(this.accountCreated)
   }
 }
 

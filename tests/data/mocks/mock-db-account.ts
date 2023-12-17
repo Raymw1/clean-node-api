@@ -1,13 +1,12 @@
 import type { AddAccountRepository, LoadAccountByEmailRepository, LoadAccountByTokenRepository, UpdateAccessTokenRepository } from '@/data/protocols'
 import { type AccountModel } from '@/domain/models'
-import { type AddAccountParams } from '@/domain/usecases'
 import { mockAccountModel } from '../../domain/mocks'
 
 export class AddAccountRepositorySpy implements AddAccountRepository {
   accountModel = mockAccountModel()
-  addAccountParams: AddAccountParams
+  addAccountParams: AddAccountRepository.Params
 
-  async add (data: AddAccountParams): Promise<AccountModel> {
+  async add (data: AddAccountRepository.Params): Promise<AddAccountRepository.Result> {
     this.addAccountParams = data
     return Promise.resolve(this.accountModel)
   }
