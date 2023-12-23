@@ -87,7 +87,7 @@ describe('DbAuthentication UseCase', () => {
     await expect(promise).rejects.toThrow()
   })
 
-  test('should return an AuthenticationModel on success', async () => {
+  test('should return authentication result on success', async () => {
     const { loadAccountByEmailRepositorySpy, encrypterSpy, sut } = makeSut()
     const authenticationModel = await sut.auth(mockAuthenticationParams())
     expect(authenticationModel?.accessToken).toBe(encrypterSpy.ciphertext)
