@@ -56,7 +56,7 @@ describe('SignUp Controller', () => {
 
   test('should return 403 if AddAccount returns false', async () => {
     const { addAccountSpy, sut } = makeSut()
-    addAccountSpy.accountCreated = false
+    addAccountSpy.result = false
     const httpResponse = await sut.handle(mockRequest())
     expect(httpResponse).toEqual(forbidden(new EmailInUseError()))
   })

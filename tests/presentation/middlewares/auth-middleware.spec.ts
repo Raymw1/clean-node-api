@@ -35,13 +35,15 @@ describe('Auth Middleware', () => {
     const { loadAccountByTokenSpy, sut } = makeSut(role)
     const request = mockRequest()
     await sut.handle(request)
-    expect(loadAccountByTokenSpy.accessToken).toBe(request['x-access-token'])
-    expect(loadAccountByTokenSpy.role).toBe(role)
+    expect(loadAccountByTokenSpy.loadAccountByTokenParams).toEqual({
+      accessToken: request['x-access-token'],
+      role
+    })
   })
 
   test('should return 403 if LoadAccountByToken returns null', async () => {
     const { loadAccountByTokenSpy, sut } = makeSut()
-    loadAccountByTokenSpy.accountModel = null
+    loadAccountByTokenSpy.result = null
     const httpResponse = await sut.handle(mockRequest())
     expect(httpResponse).toEqual(forbidden(new AccessDeniedError()))
   })
@@ -49,7 +51,7 @@ describe('Auth Middleware', () => {
   test('should return 200 if LoadAccountByToken returns an account', async () => {
     const { loadAccountByTokenSpy, sut } = makeSut()
     const httpResponse = await sut.handle(mockRequest())
-    expect(httpResponse).toEqual(ok({ accountId: loadAccountByTokenSpy.accountModel?.id }))
+    expect(httpResponse).toEqual(ok({ accountId: loadAccountByTokenSpy.result?.id }))
   })
 
   test('should return 500 if LoadAccountByToken throws', async () => {

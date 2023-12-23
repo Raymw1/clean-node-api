@@ -83,30 +83,24 @@ describe('Account Mongo Repository', () => {
       const sut = makeSut()
       const addAccountParams = mockAddAccountParams()
       await accountCollection.insertOne(Object.assign({}, addAccountParams, { accessToken }))
-      const account = await sut.loadByToken(accessToken)
+      const account = await sut.loadByToken({ accessToken })
       expect(account).toBeTruthy()
       expect(account?.id).toBeTruthy()
-      expect(account?.name).toBe(addAccountParams.name)
-      expect(account?.email).toBe(addAccountParams.email)
-      expect(account?.password).toBe(addAccountParams.password)
     })
 
     test('should return an account on loadByToken with admin role', async () => {
       const sut = makeSut()
       const addAccountParams = mockAddAccountParams()
       await accountCollection.insertOne(Object.assign({}, addAccountParams, { accessToken, role: 'admin' }))
-      const account = await sut.loadByToken(accessToken, 'admin')
+      const account = await sut.loadByToken({ accessToken, role: 'admin' })
       expect(account).toBeTruthy()
       expect(account?.id).toBeTruthy()
-      expect(account?.name).toBe(addAccountParams.name)
-      expect(account?.email).toBe(addAccountParams.email)
-      expect(account?.password).toBe(addAccountParams.password)
     })
 
     test('should return null on loadByToken with invalid role', async () => {
       const sut = makeSut()
       await accountCollection.insertOne(Object.assign({}, mockAddAccountParams(), { accessToken }))
-      const account = await sut.loadByToken(accessToken, 'admin')
+      const account = await sut.loadByToken({ accessToken, role: 'admin' })
       expect(account).toBeNull()
     })
 
@@ -114,12 +108,9 @@ describe('Account Mongo Repository', () => {
       const sut = makeSut()
       const addAccountParams = mockAddAccountParams()
       await accountCollection.insertOne(Object.assign({}, addAccountParams, { accessToken, role: 'admin' }))
-      const account = await sut.loadByToken(accessToken)
+      const account = await sut.loadByToken({ accessToken })
       expect(account).toBeTruthy()
       expect(account?.id).toBeTruthy()
-      expect(account?.name).toBe(addAccountParams.name)
-      expect(account?.email).toBe(addAccountParams.email)
-      expect(account?.password).toBe(addAccountParams.password)
     })
 
     test('should return null if loadByToken fails', async () => {
