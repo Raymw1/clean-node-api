@@ -42,7 +42,7 @@ describe('DbLoadSurveyById Usecase', () => {
   test('should return a Survey on success', async () => {
     const { loadSurveyByIdRepositorySpy, sut } = makeSut()
     const survey = await sut.loadById(surveyId)
-    expect(survey).toEqual(loadSurveyByIdRepositorySpy.surveyModel)
+    expect(survey).toEqual(loadSurveyByIdRepositorySpy.result)
   })
 
   test('should throw if LoadSurveyByIdRepository throws', async () => {
