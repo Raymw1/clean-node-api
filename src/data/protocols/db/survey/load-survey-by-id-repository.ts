@@ -1,9 +1,9 @@
-import { type LoadSurveyById } from '@/domain/usecases'
+import { type SurveyModel } from '@/domain/models'
 
 export interface LoadSurveyByIdRepository {
   loadById: (id: string) => Promise<LoadSurveyByIdRepository.Result>
 }
 
 export namespace LoadSurveyByIdRepository {
-  export type Result = LoadSurveyById.Result
+  export type Result = SurveyModel | null
 }
