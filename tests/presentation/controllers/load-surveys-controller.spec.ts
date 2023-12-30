@@ -42,12 +42,12 @@ describe('LoadSurveys Controller', () => {
   test('should return 200 on success', async () => {
     const { loadSurveysSpy, sut } = makeSut()
     const httpResponse = await sut.handle(mockRequest())
-    expect(httpResponse).toEqual(ok(loadSurveysSpy.surveyModels))
+    expect(httpResponse).toEqual(ok(loadSurveysSpy.result))
   })
 
   test('should return 204 if LoadSurveys returns empty', async () => {
     const { loadSurveysSpy, sut } = makeSut()
-    loadSurveysSpy.surveyModels = []
+    loadSurveysSpy.result = []
     const httpResponse = await sut.handle(mockRequest())
     expect(httpResponse).toEqual(noContent())
   })

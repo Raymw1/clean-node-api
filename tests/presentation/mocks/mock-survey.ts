@@ -1,4 +1,3 @@
-import { type SurveyModel } from '@/domain/models'
 import type { AddSurvey, CheckSurveyById, LoadAnswersBySurvey, LoadSurveys } from '@/domain/usecases'
 import { mockSurveyModels } from '@/tests/domain/mocks'
 import faker from 'faker'
@@ -33,11 +32,11 @@ export class LoadAnswersBySurveySpy implements LoadAnswersBySurvey {
 }
 
 export class LoadSurveysSpy implements LoadSurveys {
-  surveyModels = mockSurveyModels()
+  result = mockSurveyModels()
   accountId: string
 
-  async load (accountId: string): Promise<SurveyModel[]> {
+  async load (accountId: string): Promise<LoadSurveys.Result> {
     this.accountId = accountId
-    return Promise.resolve(this.surveyModels)
+    return Promise.resolve(this.result)
   }
 }
