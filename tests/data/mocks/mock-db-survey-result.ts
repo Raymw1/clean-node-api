@@ -1,5 +1,5 @@
 import type { LoadSurveyResultRepository, SaveSurveyResultRepository } from '@/data/protocols'
-import { type SaveSurveyResultParams } from '@/domain/usecases'
+import { type SaveSurveyResult } from '@/domain/usecases'
 import { mockSurveyResultModel } from '@/tests/domain/mocks'
 
 export class LoadSurveyResultRepositorySpy implements LoadSurveyResultRepository {
@@ -15,10 +15,10 @@ export class LoadSurveyResultRepositorySpy implements LoadSurveyResultRepository
 }
 
 export class SaveSurveyResultRepositorySpy implements SaveSurveyResultRepository {
-  saveSurveyResultParams: SaveSurveyResultParams
+  params: SaveSurveyResult.Params
 
-  async save (data: SaveSurveyResultParams): Promise<void> {
-    this.saveSurveyResultParams = data
+  async save (params: SaveSurveyResult.Params): Promise<void> {
+    this.params = params
     return Promise.resolve()
   }
 }
