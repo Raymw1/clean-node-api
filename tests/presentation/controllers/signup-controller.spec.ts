@@ -3,12 +3,12 @@ import { EmailInUseError, MissingParamError, ServerError } from '@/presentation/
 import { badRequest, created, forbidden, serverError } from '@/presentation/helpers'
 import { throwError } from '@/tests/domain/mocks'
 import { AddAccountSpy, AuthenticationSpy, ValidationSpy } from '@/tests/presentation/mocks'
-import faker from 'faker'
+import { faker } from '@faker-js/faker'
 
 const mockRequest = (): SignUpController.Request => {
   const password = faker.internet.password()
   return {
-    name: faker.name.findName(),
+    name: faker.person.fullName(),
     email: faker.internet.email(),
     password,
     passwordConfirmation: password

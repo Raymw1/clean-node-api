@@ -1,6 +1,6 @@
 import type { AddSurvey, CheckSurveyById, LoadAnswersBySurvey, LoadSurveys } from '@/domain/usecases'
 import { mockSurveyModels } from '@/tests/domain/mocks'
-import faker from 'faker'
+import { faker } from '@faker-js/faker'
 
 export class AddSurveySpy implements AddSurvey {
   addSurveyParams: AddSurvey.Params
@@ -22,7 +22,7 @@ export class CheckSurveyByIdSpy implements CheckSurveyById {
 }
 
 export class LoadAnswersBySurveySpy implements LoadAnswersBySurvey {
-  result: LoadAnswersBySurvey.Result = [faker.random.word(), faker.random.word()]
+  result: LoadAnswersBySurvey.Result = [faker.lorem.word(), faker.lorem.word()]
   id: string
 
   async loadAnswers (id: string): Promise<LoadAnswersBySurvey.Result> {

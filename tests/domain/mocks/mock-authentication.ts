@@ -1,9 +1,9 @@
 import { type Authentication } from '@/domain/usecases'
-import faker from 'faker'
+import { faker } from '@faker-js/faker'
 
 export const mockAuthenticationModel = (): Authentication.Result => ({
-  accessToken: faker.random.uuid(),
-  name: faker.name.findName()
+  accessToken: faker.database.mongodbObjectId(),
+  name: faker.person.fullName()
 })
 
 export const mockAuthenticationParams = (): Authentication.Params => ({

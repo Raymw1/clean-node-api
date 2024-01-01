@@ -1,5 +1,5 @@
 import type { AddAccountRepository, CheckAccountByEmailRepository, LoadAccountByEmailRepository, LoadAccountByTokenRepository, UpdateAccessTokenRepository } from '@/data/protocols'
-import faker from 'faker'
+import { faker } from '@faker-js/faker'
 
 export class AddAccountRepositorySpy implements AddAccountRepository {
   result = true
@@ -23,8 +23,8 @@ export class CheckAccountByEmailRepositorySpy implements CheckAccountByEmailRepo
 
 export class LoadAccountByEmailRepositorySpy implements LoadAccountByEmailRepository {
   result: LoadAccountByEmailRepository.Result = {
-    id: faker.random.uuid(),
-    name: faker.name.findName(),
+    id: faker.database.mongodbObjectId(),
+    name: faker.person.fullName(),
     password: faker.internet.password()
   }
 
@@ -37,7 +37,7 @@ export class LoadAccountByEmailRepositorySpy implements LoadAccountByEmailReposi
 }
 
 export class LoadAccountByTokenRepositorySpy implements LoadAccountByTokenRepository {
-  accountModel: LoadAccountByTokenRepository.Result = { id: faker.random.uuid() }
+  accountModel: LoadAccountByTokenRepository.Result = { id: faker.database.mongodbObjectId() }
   loadAccountByTokenRepositoryParams: LoadAccountByTokenRepository.Params
 
   async loadByToken (params: LoadAccountByTokenRepository.Params): Promise<LoadAccountByTokenRepository.Result> {

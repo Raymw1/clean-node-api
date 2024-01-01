@@ -3,10 +3,10 @@ import { forbidden, ok, serverError } from '@/presentation/helpers'
 import { AuthMiddleware } from '@/presentation/middlewares'
 import { throwError } from '@/tests/domain/mocks'
 import { LoadAccountByTokenSpy } from '@/tests/presentation/mocks'
-import faker from 'faker'
+import { faker } from '@faker-js/faker'
 
 const mockRequest = (): AuthMiddleware.Request => ({
-  'x-access-token': faker.random.uuid()
+  'x-access-token': faker.database.mongodbObjectId()
 })
 
 type SutTypes = {

@@ -1,7 +1,7 @@
 import { DbLoadAnswersBySurvey } from '@/data/usecases'
 import { LoadAnswersBySurveyRepositorySpy } from '@/tests/data/mocks'
 import { throwError } from '@/tests/domain/mocks'
-import faker from 'faker'
+import { faker } from '@faker-js/faker'
 
 type SutTypes = {
   loadAnswersBySurveyRepositorySpy: LoadAnswersBySurveyRepositorySpy
@@ -21,7 +21,7 @@ let surveyId
 
 describe('DbLoadAnswersBySurvey Usecase', () => {
   beforeEach(() => {
-    surveyId = faker.random.uuid()
+    surveyId = faker.database.mongodbObjectId()
   })
 
   test('should call LoadSurveyByIdRepository with correct value', async () => {

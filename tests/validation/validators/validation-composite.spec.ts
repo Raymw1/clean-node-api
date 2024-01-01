@@ -1,7 +1,7 @@
 import { MissingParamError } from '@/presentation/errors'
 import { ValidationSpy } from '@/tests/validation/mocks'
 import { ValidationComposite } from '@/validation/validators'
-import faker from 'faker'
+import { faker } from '@faker-js/faker'
 
 type SutTypes = {
   validationSpies: ValidationSpy[]
@@ -17,13 +17,13 @@ const makeSut = (): SutTypes => {
   }
 }
 
-const field = faker.random.word()
+const field = faker.lorem.word()
 
 describe('Validation Composite', () => {
   test('should return an error if any validation fails', () => {
     const { validationSpies, sut } = makeSut()
     validationSpies[1].error = new MissingParamError(field)
-    const error = sut.validate({ [field]: faker.random.word() })
+    const error = sut.validate({ [field]: faker.lorem.word() })
     expect(error).toEqual(new MissingParamError(field))
   })
 
@@ -31,13 +31,13 @@ describe('Validation Composite', () => {
     const { validationSpies, sut } = makeSut()
     validationSpies[0].error = new Error()
     validationSpies[1].error = new MissingParamError(field)
-    const error = sut.validate({ [field]: faker.random.word() })
+    const error = sut.validate({ [field]: faker.lorem.word() })
     expect(error).toEqual(new Error())
   })
 
   test('should not return if validation succeeds', () => {
     const { sut } = makeSut()
-    const error = sut.validate({ [field]: faker.random.word() })
+    const error = sut.validate({ [field]: faker.lorem.word() })
     expect(error).toBeFalsy()
   })
 })

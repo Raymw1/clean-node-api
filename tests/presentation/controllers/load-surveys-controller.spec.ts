@@ -2,11 +2,11 @@ import { LoadSurveysController } from '@/presentation/controllers'
 import { noContent, ok, serverError } from '@/presentation/helpers'
 import { throwError } from '@/tests/domain/mocks'
 import { LoadSurveysSpy } from '@/tests/presentation/mocks'
-import faker from 'faker'
+import { faker } from '@faker-js/faker'
 import MockDate from 'mockdate'
 
 const mockRequest = (): LoadSurveysController.Request => ({
-  accountId: faker.random.uuid()
+  accountId: faker.database.mongodbObjectId()
 })
 
 type SutTypes = {

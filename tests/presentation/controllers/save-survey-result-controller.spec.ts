@@ -3,13 +3,13 @@ import { InvalidParamError } from '@/presentation/errors'
 import { forbidden, ok, serverError } from '@/presentation/helpers'
 import { throwError } from '@/tests/domain/mocks'
 import { LoadAnswersBySurveySpy, SaveSurveyResultSpy } from '@/tests/presentation/mocks'
-import faker from 'faker'
+import { faker } from '@faker-js/faker'
 import MockDate from 'mockdate'
 
 const mockRequest = (answer?: string): SaveSurveyResultController.Request => ({
-  accountId: faker.random.uuid(),
-  answer: answer ?? faker.random.words(),
-  surveyId: faker.random.uuid()
+  accountId: faker.database.mongodbObjectId(),
+  answer: answer ?? faker.lorem.words(),
+  surveyId: faker.database.mongodbObjectId()
 })
 
 interface SutTypes {
@@ -62,9 +62,9 @@ describe('SaveSurveyResult Controller', () => {
   test('should return 403 if an invalid answer is provided', async () => {
     const { sut } = makeSut()
     const httpResponse = await sut.handle({
-      accountId: faker.random.uuid(),
-      answer: faker.random.word(),
-      surveyId: faker.random.uuid()
+      accountId: faker.database.mongodbObjectId(),
+      answer: faker.lorem.word(),
+      surveyId: faker.database.mongodbObjectId()
     })
     expect(httpResponse).toEqual(forbidden(new InvalidParamError('answer')))
   })

@@ -1,6 +1,6 @@
 import { AccountMongoRepository, MongoHelper } from '@/infra/db'
 import { mockAddAccountParams } from '@/tests/domain/mocks'
-import faker from 'faker'
+import { faker } from '@faker-js/faker'
 import { type Collection } from 'mongodb'
 
 const makeSut = (): AccountMongoRepository => {
@@ -75,7 +75,7 @@ describe('Account Mongo Repository', () => {
       const result = await accountCollection.insertOne(mockAddAccountParams())
       const fakeAccount = result.ops[0]
       expect(fakeAccount.accessToken).toBeFalsy()
-      const accessToken = faker.random.uuid()
+      const accessToken = faker.database.mongodbObjectId()
       await sut.updateAccessToken(fakeAccount._id, accessToken)
       const account = await accountCollection.findOne({ _id: fakeAccount._id })
       expect(account).toBeTruthy()
@@ -87,7 +87,7 @@ describe('Account Mongo Repository', () => {
     let accessToken: string
 
     beforeEach(() => {
-      accessToken = faker.random.uuid()
+      accessToken = faker.database.mongodbObjectId()
     })
 
     test('should return an account on loadByToken without role', async () => {

@@ -1,10 +1,10 @@
 import { InvalidParamError } from '@/presentation/errors'
 import { throwError } from '@/tests/domain/mocks'
 import { EmailValidation } from '@/validation/validators'
-import faker from 'faker'
+import { faker } from '@faker-js/faker'
 import { EmailValidatorSpy } from '../mocks'
 
-const field = faker.random.word()
+const field = faker.lorem.word()
 
 type SutTypes = {
   emailValidatorSpy: EmailValidatorSpy

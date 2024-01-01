@@ -1,6 +1,6 @@
 import type { AddAccount, Authentication, LoadAccountByToken } from '@/domain/usecases'
 import { mockAuthenticationModel } from '@/tests/domain/mocks'
-import faker from 'faker'
+import { faker } from '@faker-js/faker'
 
 export class AddAccountSpy implements AddAccount {
   result = true
@@ -23,7 +23,7 @@ export class AuthenticationSpy implements Authentication {
 }
 
 export class LoadAccountByTokenSpy implements LoadAccountByToken {
-  result: LoadAccountByToken.Result = { id: faker.random.uuid() }
+  result: LoadAccountByToken.Result = { id: faker.database.mongodbObjectId() }
   loadAccountByTokenParams: LoadAccountByToken.Params
 
   async load (params: LoadAccountByToken.Params): Promise<LoadAccountByToken.Result> {

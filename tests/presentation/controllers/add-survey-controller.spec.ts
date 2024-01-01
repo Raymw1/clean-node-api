@@ -2,12 +2,12 @@ import { AddSurveyController } from '@/presentation/controllers'
 import { badRequest, noContent, serverError } from '@/presentation/helpers'
 import { throwError } from '@/tests/domain/mocks'
 import { AddSurveySpy, ValidationSpy } from '@/tests/presentation/mocks'
-import faker from 'faker'
+import { faker } from '@faker-js/faker'
 import MockDate from 'mockdate'
 
 const mockRequest = (): AddSurveyController.Request => ({
-  question: faker.random.words(),
-  answers: [{ image: faker.image.imageUrl(), answer: faker.random.word() }]
+  question: faker.lorem.words(),
+  answers: [{ image: faker.image.url(), answer: faker.lorem.word() }]
 })
 
 type SutTypes = {

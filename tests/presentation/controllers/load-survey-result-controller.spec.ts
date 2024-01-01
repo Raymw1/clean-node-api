@@ -3,12 +3,12 @@ import { InvalidParamError } from '@/presentation/errors'
 import { forbidden, ok, serverError } from '@/presentation/helpers'
 import { throwError } from '@/tests/domain/mocks'
 import { CheckSurveyByIdSpy, LoadSurveyResultSpy } from '@/tests/presentation/mocks'
-import faker from 'faker'
+import { faker } from '@faker-js/faker'
 import MockDate from 'mockdate'
 
 const mockRequest = (): LoadSurveyResultController.Request => ({
-  accountId: faker.random.uuid(),
-  surveyId: faker.random.uuid()
+  accountId: faker.database.mongodbObjectId(),
+  surveyId: faker.database.mongodbObjectId()
 })
 
 type SutTypes = {

@@ -1,7 +1,7 @@
 import { DbLoadAccountByToken } from '@/data/usecases'
 import { DecrypterSpy, LoadAccountByTokenRepositorySpy } from '@/tests/data/mocks'
 import { throwError } from '@/tests/domain/mocks'
-import faker from 'faker'
+import { faker } from '@faker-js/faker'
 
 type SutTypes = {
   decrypterSpy: DecrypterSpy
@@ -25,8 +25,8 @@ let role: string
 
 describe('LoadAccountByToken Usecase', () => {
   beforeEach(() => {
-    accessToken = faker.random.uuid()
-    role = faker.random.word()
+    accessToken = faker.database.mongodbObjectId()
+    role = faker.lorem.word()
   })
 
   test('should call Decrypter with correct values', async () => {
