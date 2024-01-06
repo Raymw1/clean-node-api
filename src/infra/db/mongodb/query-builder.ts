@@ -1,7 +1,7 @@
 export class QueryBuilder {
   private readonly query: object[] = []
 
-  private addStep (step: string, data: object): QueryBuilder {
+  private addStep (step: string, data: object): this {
     this.query.push({
       [step]: data
     })
@@ -12,27 +12,27 @@ export class QueryBuilder {
     return this.query
   }
 
-  group (data: object): QueryBuilder {
+  group (data: object): this {
     return this.addStep('$group', data)
   }
 
-  lookup (data: object): QueryBuilder {
+  lookup (data: object): this {
     return this.addStep('$lookup', data)
   }
 
-  match (data: object): QueryBuilder {
+  match (data: object): this {
     return this.addStep('$match', data)
   }
 
-  project (data: object): QueryBuilder {
+  project (data: object): this {
     return this.addStep('$project', data)
   }
 
-  sort (data: object): QueryBuilder {
+  sort (data: object): this {
     return this.addStep('$sort', data)
   }
 
-  unwind (data: object): QueryBuilder {
+  unwind (data: object): this {
     return this.addStep('$unwind', data)
   }
 }
