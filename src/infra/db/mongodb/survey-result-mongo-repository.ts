@@ -1,12 +1,11 @@
 import type { LoadSurveyResultRepository, SaveSurveyResultRepository } from '@/data/protocols'
-import type { SaveSurveyResult } from '@/domain/usecases'
+import type { SurveyResultModel } from '@/domain/models'
 import { MongoHelper, QueryBuilder } from '@/infra/db'
-import round from 'mongo-round'
 import { ObjectId } from 'mongodb'
 
 export class SurveyResultMongoRepository implements LoadSurveyResultRepository, SaveSurveyResultRepository {
-  async save (params: SaveSurveyResult.Params): Promise<void> {
-    const surveyResultCollection = await MongoHelper.getCollection('surveyResults')
+  async save (params: SaveSurveyResultRepository.Params): Promise<void> {
+    const surveyResultCollection = MongoHelper.getCollection('surveyResults')
     await surveyResultCollection.findOneAndUpdate({
       surveyId: new ObjectId(params.surveyId),
       accountId: new ObjectId(params.accountId)
@@ -21,7 +20,7 @@ export class SurveyResultMongoRepository implements LoadSurveyResultRepository, 
   }
 
   async loadBySurveyId (surveyId: string, accountId: string): Promise<LoadSurveyResultRepository.Result> {
-    const surveyResultCollection = await MongoHelper.getCollection('surveyResults')
+    const surveyResultCollection = MongoHelper.getCollection('surveyResults')
     const query = new QueryBuilder()
       .match({
         surveyId: new ObjectId(surveyId)
@@ -61,7 +60,7 @@ export class SurveyResultMongoRepository implements LoadSurveyResultRepository, 
         },
         currentAccountAnswer: {
           $push: {
-            $cond: [{ $eq: ['$data.accountId', accountId] }, '$data.answer', '$invalid']
+            $cond: [{ $eq: ['$data.accountId', new ObjectId(accountId)] }, '$data.answer', '$invalid']
           }
         }
       })
@@ -183,7 +182,9 @@ export class SurveyResultMongoRepository implements LoadSurveyResultRepository, 
           answer: '$_id.answer',
           image: '$_id.image',
           count: '$count',
-          percent: round('$percent'),
+          percent: {
+            $round: ['$percent', 2]
+          },
           isCurrentAccountAnswer: {
             $eq: ['$isCurrentAccountAnswerCount', 1]
           }
@@ -210,7 +211,7 @@ export class SurveyResultMongoRepository implements LoadSurveyResultRepository, 
         answers: '$answers'
       })
       .build()
-    const surveyResult = await surveyResultCollection.aggregate(query).toArray()
+    const surveyResult = await surveyResultCollection.aggregate<SurveyResultModel>(query).toArray()
     if (!surveyResult.length) {
       return null
     }

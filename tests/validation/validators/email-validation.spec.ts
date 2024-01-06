@@ -39,6 +39,7 @@ describe('Email Validation', () => {
   test('should throw if EmailValidator throws', () => {
     const { emailValidatorSpy, sut } = makeSut()
     jest.spyOn(emailValidatorSpy, 'isValid').mockImplementationOnce(throwError)
+    // eslint-disable-next-line @typescript-eslint/unbound-method
     expect(sut.validate).toThrow()
   })
 })

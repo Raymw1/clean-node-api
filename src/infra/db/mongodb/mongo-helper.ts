@@ -6,27 +6,19 @@ export const MongoHelper = {
 
   async connect (uri: string): Promise<void> {
     this.uri = uri
-    this.client = await MongoClient.connect(uri, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true
-    })
+    this.client = await MongoClient.connect(uri)
   },
 
   async disconnect (): Promise<void> {
-    if (this.client) {
-      await this.client.close()
-      this.client = null
-    }
+    await this.client.close()
+    this.client = null
   },
 
-  async getCollection (name: string): Promise<Collection> {
-    if (!this.client?.isConnected()) {
-      await this.connect(this.uri)
-    }
+  getCollection (name: string): Collection {
     return this.client.db().collection(name)
   },
 
-  map<T> (data: any): T {
+  map: <T = string>(data: any): T => {
     const { _id, ...dataWithoutId } = data
     return Object.assign({}, dataWithoutId, { id: _id })
   },
